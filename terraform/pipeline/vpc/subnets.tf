@@ -7,7 +7,7 @@ resource "aws_subnet" "public_subnets" {
 
   count = "${var.public_count}"
 
-  tags {
+  tags = {
     Name   = "public_10.0.${count.index * 2 + 1}.0_${element(var.availability_zones, count.index)}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -23,7 +23,7 @@ resource "aws_subnet" "private_subnets" {
 
   count = "${var.public_count}"
 
-  tags {
+  tags = {
     Name   = "private_10.0.${count.index * 2}.0_${element(var.availability_zones, count.index)}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -34,7 +34,7 @@ resource "aws_subnet" "private_subnets" {
 resource "aws_internet_gateway" "igw" {
   vpc_id = "${aws_vpc.default.id}"
 
-  tags {
+  tags = {
     Name   = "igw_${var.vpc_name}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -45,7 +45,7 @@ resource "aws_internet_gateway" "igw" {
 resource "aws_eip" "nat" {
   vpc = true
 
-  tags {
+  tags = {
     Name   = "eip-nat_${var.vpc_name}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -57,7 +57,7 @@ resource "aws_nat_gateway" "nat" {
   allocation_id = "${aws_eip.nat.id}"
   subnet_id     = "${element(aws_subnet.public_subnets.*.id, 0)}"
 
-  tags {
+  tags = {
     Name   = "nat_${var.vpc_name}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -73,7 +73,7 @@ resource "aws_route_table" "public_rt" {
     gateway_id = "${aws_internet_gateway.igw.id}"
   }
 
-  tags {
+  tags = {
     Name   = "public_rt_${var.vpc_name}"
     Author = "npadala"
     Tool   = "Terraform"
@@ -89,7 +89,7 @@ resource "aws_route_table" "private_rt" {
     nat_gateway_id = "${aws_nat_gateway.nat.id}"
   }
 
-  tags {
+  tags = {
     Name   = "private_rt_${var.vpc_name}"
     Author = "npadala"
     Tool   = "Terraform"

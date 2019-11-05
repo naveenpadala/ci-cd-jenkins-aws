@@ -18,10 +18,22 @@ variable "availability_zones" {
 
 variable "public_key" {
   description = "SSH public key"
+  default = "~/.ssh/id_rsa.pub"
 }
 
-variable "hosted_zone_id" {
-  description = "Route53 zone id"
+
+//variable "hosted_zone_id" {
+//  description = "Route53 zone id"
+//}
+
+variable "bastion_key_name" {
+  description = "Bastion KeyName"
+  default = "cicdDemo"
+}
+
+variable "bastion_instance_type" {
+  description = "Bastion Instance type"
+  default     = "t2.micro"
 }
 
 // Default variables

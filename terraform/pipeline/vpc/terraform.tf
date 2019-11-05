@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     encrypt = "true"
-    bucket  = "terraform-state-aws-pipeline"
+    bucket  = "ci-cd-terraform-state-aws-pipeline"
     region  = "us-east-2"
     key     = "vpc/terraform.tfstate"
   }
